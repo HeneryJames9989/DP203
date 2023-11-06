@@ -2469,6 +2469,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [CustomerId]\n,[FirstName]\n,[LastName]\n,[EmailAddress]\n,[Phone]\n FROM [RetailDB].[Customer]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "RetailDB",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/RetailDB')]",
 			"type": "Microsoft.Synapse/workspaces/databases",
 			"apiVersion": "2019-06-01-preview",
@@ -2591,23 +2611,23 @@
 									"FormatType": "csv",
 									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
 									"Properties": {
-										"path": "abfss://deltalake@deltalakedev.dfs.core.windows.net/RetailDB/Customer",
+										"path": "abfss://deltalake@deltalakedev.dfs.core.windows.net/synapse/workspaces/versorlab-synapse/warehouse/RetailDB/Customer",
 										"delimiter": ",",
 										"multiLine": "false",
 										"firstRowAsHeader": "false",
 										"serialization.format": "1",
 										"escape": "\\",
 										"quote": "\"",
-										"FormatTypeSetToDatabaseDefault": true,
+										"FormatTypeSetToDatabaseDefault": false,
 										"header": "false"
 									}
 								},
 								"Source": {
 									"Provider": "ADLS",
-									"Location": "abfss://deltalake@deltalakedev.dfs.core.windows.net/RetailDB/Customer",
+									"Location": "abfss://deltalake@deltalakedev.dfs.core.windows.net/synapse/workspaces/versorlab-synapse/warehouse/RetailDB/Customer",
 									"Properties": {
 										"LinkedServiceName": "versorlab-synapse-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": true
+										"LocationSetToDatabaseDefault": false
 									}
 								},
 								"Properties": {
